@@ -235,6 +235,16 @@ keymap.set.telescope = {
     plugin_set = {}
 }
 
+keymap.set.toggleterm = {
+    vim_api_set = {
+      {"n", "<leader>tf", "<cmd>lua require('toggleterm').float_toggle()<CR>", "ns_opt"},
+      {"n", "<leader>tg", "<cmd>lua require('toggleterm').lazygit_toggle()<CR>", "ns_opt"},
+      {"t", "<Esc>", "<C-\\><C-n>", "ns_opt"},
+      {"n", "<leader>tt", "<cmd>ToggleTermToggleAll<CR>", "ns_opt"}
+    },
+    plugin_set = {},
+}
+
 for plug_name, _ in pairs(keymap.set) do
     keymap.fn.register_key(plug_name)
 end
