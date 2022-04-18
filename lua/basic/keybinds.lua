@@ -1,31 +1,240 @@
 -- leader 键设置为空格                                    
-vim.g.mapleader = " " 
+vim.g.mapleader = " "
 
--- 默认的键位设置函数太长了，所以这里将它们重新引用一下
-vim.keybinds = {    
-    gmap = vim.api.nvim_set_keymap,    
-    bmap = vim.api.nvim_buf_set_keymap,    
-    dgmap = vim.api.nvim_del_keymap,    
-    dbmap = vim.api.nvim_buf_del_keymap,    
-    opts = {noremap = true, silent = true}    
+keymap = {
+    set = {},
+    opt = {
+        ns_opt = {noremap = true, silent = true},
+        se_opt = {silent = true, expr = true}
+    },
+    fn = {
+        register_key = function(plug_name)
+            local vim_api_set = keymap.set[plug_name].vim_api_set
+            for _, value in ipairs(vim_api_set) do
+                vim.api.nvim_set_keymap(value[1], value[2], value[3], keymap.opt[value[4]])
+            end
+        end
+    }
 }
 
--- 正常模式下按 空格+回车 取消高亮显示    
-vim.keybinds.gmap("n", "<ESC>", ":nohlsearch<CR>", vim.keybinds.opts)
+--vim.keymap.set("n", "<C-j>", "5j", {noremap = true})
 
--- 通过 leader cs 切换拼写检查    
-vim.keybinds.gmap("n", "<leader>cs", "<cmd>set spell!<CR>", vim.keybinds.opts)
+keymap.set.base = {
+    vim_api_set = {
+      {"n", "<C-j>", "5j", "ns_opt"},
+      {"n", "<C-k>", "5k", "ns_opt"},
+      {"n", "<C-s>", ":wa<CR>", "ns_opt"},
+      {"n", "<ESC>", ":nohlsearch<CR>", "ns_opt"},
+      {"n", "<C-up>", "<cmd>res +1<CR>", "ns_opt"},
+      {"n", "<C-down>", "<cmd>res -1<CR>", "ns_opt"},
+      {"n", "<C-left>", "<cmd>vertical resize-1<CR>", "ns_opt"},
+      {"n", "<C-right>", "<cmd>vertical resize+1<CR>", "ns_opt"},
+      {"n", "<leader>cs", "<cmd>set spell!<cr>", "ns_opt"}
+    },
+    plugin_set = {}
+}
 
--- 个人常用映射
-vim.keybinds.gmap("n", "<C-j>", "5j", vim.keybinds.opts)
-vim.keybinds.gmap("n", "<C-k>", "5k", vim.keybinds.opts)
-vim.keybinds.gmap("n", "<C-s>", ":wa<CR>", vim.keybinds.opts)
--- vim.keybinds.gmap("n", "<leader>w", ":bd<CR>", vim.keybinds.opts)
--- vim.keybinds.gmap("n", "<leader>q", ":bd!<CR>", vim.keybinds.opts)
+keymap.set.bufferline = {
+    vim_api_set = {
+        {"n", "<c-h>", "<cmd>BufferLineCyclePrev<cr>", "ns_opt"},
+        {"n", "<c-l>", "<cmd>BufferLineCycleNext<cr>", "ns_opt"},
+        {"n", "<leader>w", "<cmd>Bdelete<CR>", "ns_opt"},
+        {"n", "<leader>b1", "<cmd>BufferLineGoToBuffer 1<cr>", "ns_opt"},
+        {"n", "<leader>b2", "<cmd>BufferLineGoToBuffer 2<cr>", "ns_opt"},
+        {"n", "<leader>b3", "<cmd>BufferLineGoToBuffer 3<cr>", "ns_opt"},
+        {"n", "<leader>b4", "<cmd>BufferLineGoToBuffer 4<cr>", "ns_opt"},
+        {"n", "<leader>b5", "<cmd>BufferLineGoToBuffer 5<cr>", "ns_opt"},
+        {"n", "<leader>b6", "<cmd>BufferLineGoToBuffer 6<cr>", "ns_opt"},
+        {"n", "<leader>b7", "<cmd>BufferLineGoToBuffer 7<cr>", "ns_opt"},
+        {"n", "<leader>b8", "<cmd>BufferLineGoToBuffer 8<cr>", "ns_opt"},
+        {"n", "<leader>b9", "<cmd>BufferLineGoToBuffer 9<cr>", "ns_opt"}
+        -- {"n", "<leader>bh", "<cmd>BufferLineCloseLeft<cr>", "ns_opt"},
+        -- {"n", "<leader>bl", "<cmd>BufferLineCloseRight<cr>", "ns_opt"},
+        -- {"n", "<leader>bt", "<cmd>BufferLinePick<cr>", "ns_opt"},
+        -- {"n", "<leader>bs", "<cmd>BufferLineSortByExtension<cr>", "ns_opt"}
+    },
+    plugin_set = {}
+}
 
--- 修改分屏大小    
-vim.keybinds.gmap("n", "<C-up>", "<cmd>res +1<CR>", vim.keybinds.opts)    
-vim.keybinds.gmap("n", "<C-down>", "<cmd>res -1<CR>", vim.keybinds.opts)    
-vim.keybinds.gmap("n", "<C-left>", "<cmd>vertical resize-1<CR>", vim.keybinds.opts)    
-vim.keybinds.gmap("n", "<C-right>", "<cmd>vertical resize+1<CR>", vim.keybinds.opts)
+keymap.set.hop = {
+    vim_api_set = {
+        {"n", "ss", "<cmd>HopWord<cr>", "ns_opt"},
+        {"n", "sl", "<cmd>HopLine<cr>", "ns_opt"},
+        {"n", "sc", "<cmd>HopChar1<cr>", "ns_opt"}
+    },
+    plugin_set = {}
+}
 
+keymap.set.neoformat = {
+    vim_api_set = {
+        {"n", "<leader>cf", "<cmd>Neoformat<cr>", "ns_opt"}
+    },
+    plugin_set = {}
+}
+
+keymap.set.todo_comments = {
+    vim_api_set = {
+        {"n", "<leader>ft", "<cmd>TodoTelescope theme=dropdown<cr>", "ns_opt"}
+    },
+    plugin_set = {}
+}
+
+keymap.set.undotree = {
+    vim_api_set = {
+        {"n", "<leader>3", ":UndotreeToggle<cr>", "ns_opt"}
+    },
+    plugin_set = {}
+}
+
+keymap.set.nvim_tree = {
+    vim_api_set = {
+      {"n", "<leader>1", "<cmd>NvimTreeToggle<CR>", "ns_opt"},
+      {"n", "<leader>fc", "<cmd>NvimTreeFindFile<cr>", "ns_opt"}
+    },
+    plugin_set = {}
+}
+
+keymap.set.nvim_spectre = {
+    vim_api_set = {
+        {"n", "<leader>ro", "<cmd>lua require('spectre').open()<cr>", "ns_opt"},
+        {"n", "<leader>rf", "viw:lua require('spectre').open_file_search()<cr>", "ns_opt"},
+        -- {"n", "<leader>rw", "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "ns_opt"},
+        {"n", "<leader>rc", ":close<CR>", "ns_opt"},
+        {"n", "<leader>rp", "<cmd>lua require('spectre.actions').run_replace()<CR>", "ns_opt"},
+        {"n", "<leader>rd", "<cmd>lua require('spectre').toggle_line()<CR>", "ns_opt"},
+        {"n", "<leader>rv", "<cmd>lua require('spectre').change_view()<CR>", "ns_opt"},
+        {"n", "<CR>", "<cmd>lua require('spectre.actions').select_entry()<CR>", "ns_opt"}
+    },
+    plugin_set = {}
+}
+
+keymap.set.packer = {
+    vim_api_set = {
+        {"n", "<leader>ps", "<cmd>PackerSync<cr>", "ns_opt"},
+        {"n", "<leader>pS", "<cmd>PackerStatus<cr>", "ns_opt"},
+        {"n", "<leader>pc", "<cmd>PackerClean<cr>", "ns_opt"},
+        {"n", "<leader>pu", "<cmd>PackerUpdate<cr>", "ns_opt"},
+        {"n", "<leader>pi", "<cmd>PackerInstall<cr>", "ns_opt"},
+        {"n", "<leader>pr", "<cmd>PackerCompile<cr>", "ns_opt"}
+    },
+    plugin_set = {}
+}
+
+keymap.set.nvim_hlslens = {
+    vim_api_set = {
+        -- search highlight
+        {
+            "n",
+            "n",
+            "<cmd>execute('normal! ' . v:count1 . 'n')<cr><cmd>lua require('hlslens').start()<cr>",
+            "ns_opt"
+        },
+        {
+            "n",
+            "N",
+            "<cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>",
+            "ns_opt"
+        },
+        {"n", "*", "*<cmd>lua require('hlslens').start()<CR>", "ns_opt"},
+        {"n", "#", "#<cmd>lua require('hlslens').start()<cr>", "ns_opt"},
+        {"n", "g*", "g*<cmd>lua require('hlslens').start()<cr>", "ns_opt"},
+        {"n", "g#", "g#<cmd>lua require('hlslens').start()<cr>", "ns_opt"}
+    },
+    plugin_set = {}
+}
+
+keymap.set.nvim_notify = {
+    vim_api_set = {
+        -- 显示历史弹窗
+        {
+            "n",
+            "<leader>fn",
+            "<cmd>lua require('telescope').extensions.notify.notify(require('telescope.themes').get_dropdown({}))<cr>",
+            "ns_opt"
+        }
+    },
+    plugin_set = {}
+}
+
+keymap.set.telescope = {
+    vim_api_set = {
+        -- search files
+        {
+            "n",
+            "<leader>ff",
+            "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown({}))<cr>",
+            "ns_opt"
+        },
+        -- search with grep
+        {
+            "n",
+            "<leader>fg",
+            "<cmd>lua require('telescope.builtin').live_grep(require('telescope.themes').get_dropdown({}))<cr>",
+            "ns_opt"
+        },
+        -- search files recently opened
+        {
+            "n",
+            "<leader>fo",
+            "<cmd>lua require('telescope.builtin').oldfiles(require('telescope.themes').get_dropdown({}))<cr>",
+            "ns_opt"
+        },
+        {
+            "n",
+            "<leader>fh",
+            "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_dropdown({}))<cr>",
+            "ns_opt"
+        },
+        -- search marks
+        {
+            "n",
+            "<leader>fm",
+            "<cmd>lua require('telescope.builtin').marks(require('telescope.themes').get_dropdown({}))<cr>",
+            "ns_opt"
+        },
+        {
+            "n",
+            "<leader>fi",
+            "<cmd>lua require('telescope.builtin').highlights(require('telescope.themes').get_dropdown({}))<cr>",
+            "ns_opt"
+        },
+        -- search buffers
+        {
+            "n",
+            "<leader>fb",
+            "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>",
+            "ns_opt"
+        },
+        {
+            "n",
+            "<leader>fp",
+            "<cmd>lua require('telescope.builtin').pickers(require('telescope.themes').get_dropdown({}))<cr>",
+            "ns_opt"
+        },
+        -- search history
+        {
+            "n",
+            "<leader>f/",
+            "<cmd>lua require('telescope.builtin').search_history(require('telescope.themes').get_dropdown({}))<cr>",
+            "ns_opt"
+        },
+        -- search command history
+        {
+            "n",
+            "<leader>f:",
+            "<cmd>lua require('telescope.builtin').command_history(require('telescope.themes').get_dropdown({}))<cr>",
+            "ns_opt"
+        }
+        -- {
+        --     "n",
+        --     "<leader>fh",
+        --     "<cmd>lua require('telescope.builtin').help_tags(require('telescope.themes').get_dropdown({}))<cr>",
+        --     "ns_opt"
+        -- },
+    },
+    plugin_set = {}
+}
+
+for plug_name, _ in pairs(keymap.set) do
+    keymap.fn.register_key(plug_name)
+end

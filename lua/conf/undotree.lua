@@ -12,6 +12,3 @@ if has("persistent_undo")
     set undofile
 ]]
 )
-
--- 按键绑定，查看 undotree
-vim.keybinds.gmap("n", "<leader>h", ":UndotreeToggle<CR>", vim.keybinds.opts)

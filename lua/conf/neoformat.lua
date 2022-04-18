@@ -20,4 +20,3 @@ vim.g.neoformat_only_msg_on_error = 1
 --   autocmd BufWritePre * undojoin | Neoformat
 -- augroup END
 -- ]])
-vim.keybinds.gmap("n", "<leader>f", "<cmd>Neoformat<CR>", vim.keybinds.opts)

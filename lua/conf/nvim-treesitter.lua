@@ -4,7 +4,7 @@
 require("nvim-treesitter.configs").setup(
     {
         -- 安装的高亮支持来源
-        ensure_installed = {"c", "cpp"},
+        ensure_installed = {"c", "cpp", "lua", "go"},
         -- 同步下载高亮支持
         sync_install = false,
         -- 高亮相关
