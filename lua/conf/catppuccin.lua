@@ -56,5 +56,28 @@ require("catppuccin").setup(
         }
     }
 )
+
+-- 自定义高亮组
+vim.cmd(
+ [[highlight Lspsaga guifg=#96CDF8]]
+)
+
+-- 高亮组风格统一
+vim.cmd(
+[[
+" 重命名边框
+highlight link LspSagaRenameBorder Lspsaga
+" 悬浮文档边框
+highlight link LspSagaHoverBorder Lspsaga
+" 悬浮文档分割线
+highlight link LspSagaDocTruncateLine Lspsaga
+" 代码诊断边框
+highlight link LspSagaDiagnosticBorder Lspsaga
+" 代码诊断分割线
+highlight link LspSagaDiagnosticTruncateLine Lspsaga
+]]
+)
+
 -- 应用主题
-vim.cmd([[colorscheme catppuccin]])
+-- vim.cmd([[colorscheme catppuccin]])
+

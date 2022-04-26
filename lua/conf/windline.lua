@@ -5,7 +5,8 @@
 local windline = require('windline')
 local effects = require('wlanimation.effects')
 local HSL = require('wlanimation.utils')
-require('wlsample.airline')
+require('wlsample.vscode')
+-- require('wlsample.airline')
 local animation = require('wlanimation')
 
 local is_run = false

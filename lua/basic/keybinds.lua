@@ -1,7 +1,8 @@
--- leader 键设置为空格                                    
+-- leader 键设置为空格
 vim.g.mapleader = " "
 
-keymap = {
+
+vim.u.keymap = {
     set = {},
     opt = {
         ns_opt = {noremap = true, silent = true},
@@ -9,32 +10,30 @@ keymap = {
     },
     fn = {
         register_key = function(plug_name)
-            local vim_api_set = keymap.set[plug_name].vim_api_set
+            local vim_api_set = vim.u.keymap.set[plug_name].vim_api_set
             for _, value in ipairs(vim_api_set) do
-                vim.api.nvim_set_keymap(value[1], value[2], value[3], keymap.opt[value[4]])
+                vim.api.nvim_set_keymap(value[1], value[2], value[3], vim.u.keymap.opt[value[4]])
             end
         end
     }
 }
 
---vim.keymap.set("n", "<C-j>", "5j", {noremap = true})
-
-keymap.set.base = {
+vim.u.keymap.set.base = {
     vim_api_set = {
-      {"n", "<C-j>", "5j", "ns_opt"},
-      {"n", "<C-k>", "5k", "ns_opt"},
-      {"n", "<C-s>", ":wa<CR>", "ns_opt"},
-      {"n", "<ESC>", ":nohlsearch<CR>", "ns_opt"},
-      {"n", "<C-up>", "<cmd>res +1<CR>", "ns_opt"},
-      {"n", "<C-down>", "<cmd>res -1<CR>", "ns_opt"},
-      {"n", "<C-left>", "<cmd>vertical resize-1<CR>", "ns_opt"},
-      {"n", "<C-right>", "<cmd>vertical resize+1<CR>", "ns_opt"},
-      {"n", "<leader>cs", "<cmd>set spell!<cr>", "ns_opt"}
+        {"n", "<C-j>", "5j", "ns_opt"},
+        {"n", "<C-k>", "5k", "ns_opt"},
+        {"n", "<C-s>", ":wa<CR>", "ns_opt"},
+        {"n", "<ESC>", ":nohlsearch<CR>", "ns_opt"},
+        {"n", "<C-up>", "<cmd>res +1<CR>", "ns_opt"},
+        {"n", "<C-down>", "<cmd>res -1<CR>", "ns_opt"},
+        {"n", "<C-left>", "<cmd>vertical resize-1<CR>", "ns_opt"},
+        {"n", "<C-right>", "<cmd>vertical resize+1<CR>", "ns_opt"},
+        {"n", "<leader>cs", "<cmd>set spell!<cr>", "ns_opt"}
     },
     plugin_set = {}
 }
 
-keymap.set.bufferline = {
+vim.u.keymap.set.bufferline = {
     vim_api_set = {
         {"n", "<c-h>", "<cmd>BufferLineCyclePrev<cr>", "ns_opt"},
         {"n", "<c-l>", "<cmd>BufferLineCycleNext<cr>", "ns_opt"},
@@ -56,7 +55,7 @@ keymap.set.bufferline = {
     plugin_set = {}
 }
 
-keymap.set.hop = {
+vim.u.keymap.set.hop = {
     vim_api_set = {
         {"n", "ss", "<cmd>HopWord<cr>", "ns_opt"},
         {"n", "sl", "<cmd>HopLine<cr>", "ns_opt"},
@@ -65,36 +64,36 @@ keymap.set.hop = {
     plugin_set = {}
 }
 
-keymap.set.neoformat = {
+vim.u.keymap.set.neoformat = {
     vim_api_set = {
         {"n", "<leader>cf", "<cmd>Neoformat<cr>", "ns_opt"}
     },
     plugin_set = {}
 }
 
-keymap.set.todo_comments = {
+vim.u.keymap.set.todo_comments = {
     vim_api_set = {
         {"n", "<leader>ft", "<cmd>TodoTelescope theme=dropdown<cr>", "ns_opt"}
     },
     plugin_set = {}
 }
 
-keymap.set.undotree = {
+vim.u.keymap.set.undotree = {
     vim_api_set = {
         {"n", "<leader>3", ":UndotreeToggle<cr>", "ns_opt"}
     },
     plugin_set = {}
 }
 
-keymap.set.nvim_tree = {
+vim.u.keymap.set.nvim_tree = {
     vim_api_set = {
-      {"n", "<leader>1", "<cmd>NvimTreeToggle<CR>", "ns_opt"},
-      {"n", "<leader>fc", "<cmd>NvimTreeFindFile<cr>", "ns_opt"}
+        {"n", "<leader>1", "<cmd>NvimTreeToggle<CR>", "ns_opt"},
+        {"n", "<leader>fc", "<cmd>NvimTreeFindFile<cr>", "ns_opt"}
     },
     plugin_set = {}
 }
 
-keymap.set.nvim_spectre = {
+vim.u.keymap.set.nvim_spectre = {
     vim_api_set = {
         {"n", "<leader>ro", "<cmd>lua require('spectre').open()<cr>", "ns_opt"},
         {"n", "<leader>rf", "viw:lua require('spectre').open_file_search()<cr>", "ns_opt"},
@@ -108,7 +107,7 @@ keymap.set.nvim_spectre = {
     plugin_set = {}
 }
 
-keymap.set.packer = {
+vim.u.keymap.set.packer = {
     vim_api_set = {
         {"n", "<leader>ps", "<cmd>PackerSync<cr>", "ns_opt"},
         {"n", "<leader>pS", "<cmd>PackerStatus<cr>", "ns_opt"},
@@ -120,7 +119,7 @@ keymap.set.packer = {
     plugin_set = {}
 }
 
-keymap.set.nvim_hlslens = {
+vim.u.keymap.set.nvim_hlslens = {
     vim_api_set = {
         -- search highlight
         {
@@ -143,7 +142,7 @@ keymap.set.nvim_hlslens = {
     plugin_set = {}
 }
 
-keymap.set.nvim_notify = {
+vim.u.keymap.set.nvim_notify = {
     vim_api_set = {
         -- 显示历史弹窗
         {
@@ -156,7 +155,7 @@ keymap.set.nvim_notify = {
     plugin_set = {}
 }
 
-keymap.set.telescope = {
+vim.u.keymap.set.telescope = {
     vim_api_set = {
         -- search files
         {
@@ -179,12 +178,6 @@ keymap.set.telescope = {
             "<cmd>lua require('telescope.builtin').oldfiles(require('telescope.themes').get_dropdown({}))<cr>",
             "ns_opt"
         },
-        {
-            "n",
-            "<leader>fh",
-            "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_dropdown({}))<cr>",
-            "ns_opt"
-        },
         -- search marks
         {
             "n",
@@ -192,23 +185,11 @@ keymap.set.telescope = {
             "<cmd>lua require('telescope.builtin').marks(require('telescope.themes').get_dropdown({}))<cr>",
             "ns_opt"
         },
-        {
-            "n",
-            "<leader>fi",
-            "<cmd>lua require('telescope.builtin').highlights(require('telescope.themes').get_dropdown({}))<cr>",
-            "ns_opt"
-        },
         -- search buffers
         {
             "n",
             "<leader>fb",
             "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>",
-            "ns_opt"
-        },
-        {
-            "n",
-            "<leader>fp",
-            "<cmd>lua require('telescope.builtin').pickers(require('telescope.themes').get_dropdown({}))<cr>",
             "ns_opt"
         },
         -- search history
@@ -224,27 +205,64 @@ keymap.set.telescope = {
             "<leader>f:",
             "<cmd>lua require('telescope.builtin').command_history(require('telescope.themes').get_dropdown({}))<cr>",
             "ns_opt"
+        },
+        {
+            "n",
+            "<leader>fr",
+            "<cmd>lua require('telescope').extensions.live_grep_raw.live_grep_raw()<cr>",
+            "ns_opt"
         }
-        -- {
-        --     "n",
-        --     "<leader>fh",
-        --     "<cmd>lua require('telescope.builtin').help_tags(require('telescope.themes').get_dropdown({}))<cr>",
-        --     "ns_opt"
-        -- },
     },
     plugin_set = {}
 }
 
-keymap.set.toggleterm = {
+vim.u.keymap.set.toggleterm = {
     vim_api_set = {
-      {"n", "<leader>tf", "<cmd>lua require('toggleterm').float_toggle()<CR>", "ns_opt"},
-      {"n", "<leader>tg", "<cmd>lua require('toggleterm').lazygit_toggle()<CR>", "ns_opt"},
-      {"t", "<Esc>", "<C-\\><C-n>", "ns_opt"},
-      {"n", "<leader>tt", "<cmd>ToggleTermToggleAll<CR>", "ns_opt"}
+        {"n", "<leader>tf", "<cmd>lua require('toggleterm').float_toggle()<CR>", "ns_opt"},
+        {"n", "<leader>tg", "<cmd>lua require('toggleterm').lazygit_toggle()<CR>", "ns_opt"},
+        {"t", "<Esc>", "<C-\\><C-n>", "ns_opt"},
+        {"n", "<leader>tt", "<cmd>ToggleTermToggleAll<CR>", "ns_opt"}
     },
-    plugin_set = {},
+    plugin_set = {}
 }
 
-for plug_name, _ in pairs(keymap.set) do
-    keymap.fn.register_key(plug_name)
+vim.u.keymap.set.vim_translator = {
+    vim_api_set = {
+        {"n", "<leader>tsc", ":Translate --target_lang=zh --source_lang=auto<cr>", "ns_opt"},
+        {"v", "<leader>tsc", ":TranslateW --target_lang=zh --source_lang=auto<cr>", "ns_opt"},
+        {"n", "<leader>tse", ":Translate --target_lang=en --source_lang=auto<cr>", "ns_opt"},
+        {"v", "<leader>tse", ":TranslateW --target_lang=en --source_lang=auto<cr>", "ns_opt"},
+        {"n", "<leader>trc", ":TranslateR --target_lang=zh --source_lang=auto<cr>", "ns_opt"},
+        {"v", "<leader>trc", ":TranslateR --target_lang=zh --source_lang=auto<cr>", "ns_opt"},
+        {"n", "<leader>tre", ":TranslateR --target_lang=en --source_lang=auto<cr>", "ns_opt"},
+        {"v", "<leader>tre", ":TranslateR --target_lang=en --source_lang=auto<cr>", "ns_opt"}
+    },
+    plugin_set = {}
+}
+
+vim.u.keymap.set.aerial = {
+    vim_api_set = {},
+    plugin_set = {
+        aerial_toggle = "<leader>2",
+        aerial_prev = "{",
+        aerial_next = "}",
+        aerial_prev_up = "[[",
+        aerial_next_up = "]]"
+    }
+    -- <C-j> : 移动到下一个项目
+    -- <C-k> : 移动到上一个项目
+    -- {     : 移动到上一个类别
+    -- }     : 移动到下一个类别
+    -- [[    : 移动到上一个类别
+    -- ]]    : 移动到下一个类别
+    -- o     : 打开当前项目
+    -- za    : 切换当前项目
+    -- zc    : 关闭当前项目
+    -- zo    : 打开当前项目
+    -- zM    : 关闭所有项目
+    -- zR    : 关闭所有项目
+}
+
+for plug_name, _ in pairs(vim.u.keymap.set) do
+    vim.u.keymap.fn.register_key(plug_name)
 end

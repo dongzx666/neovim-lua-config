@@ -15,6 +15,7 @@ packer.startup(
                     -- 依赖一个图标插件
                     "kyazdani42/nvim-web-devicons"
                 },
+                cmd = {"NvimTreeToggle", "NvimTreeFindFile"},
                 config = function()
                     -- 插件加载完成后自动运行 lua/conf/nvim-tree.lua 文件中的代码
                     require("conf.nvim-tree")
@@ -28,6 +29,12 @@ packer.startup(
                 config = function()
                     -- 插件加载完成后自动运行 lua/conf/catppuccin.lua 文件中的代码
                     require("conf.catppuccin")
+                end
+            }
+            use {
+                "projekt0n/github-nvim-theme",
+                config = function()
+                    require("conf.github-nvim-theme")
                 end
             }
             -- 炫酷的状态栏插件
@@ -65,6 +72,7 @@ packer.startup(
             -- 自动匹配括号
             use {
                 "windwp/nvim-autopairs",
+                event = "InsertEnter",
                 config = function()
                     require("conf.nvim-autopairs")
                 end
@@ -72,6 +80,7 @@ packer.startup(
             -- 快速跳转
             use {
                 "phaazon/hop.nvim",
+                cmd = {"HopWord", "HopLine", "HopChar1"},
                 config = function()
                     require("conf.hop")
                 end
@@ -110,7 +119,8 @@ packer.startup(
                 requires = {
                     "nvim-lua/plenary.nvim", -- Lua 开发模块
                     "BurntSushi/ripgrep", -- 文字查找
-                    "sharkdp/fd" -- 文件查找
+                    "sharkdp/fd", -- 文件查找
+                    "nvim-telescope/telescope-live-grep-raw.nvim"
                 },
                 config = function()
                     require("conf.telescope")
@@ -167,18 +177,18 @@ packer.startup(
             }
             -- 自动代码补全系列插件
             use {
-                "hrsh7th/nvim-cmp",  -- 代码补全核心插件，下面都是增强补全的体验插件
+                "hrsh7th/nvim-cmp", -- 代码补全核心插件，下面都是增强补全的体验插件
                 requires = {
                     {"onsails/lspkind-nvim"}, -- 为补全添加类似 vscode 的图标
                     {"hrsh7th/vim-vsnip"}, -- vsnip 引擎，用于获得代码片段支持
                     {"hrsh7th/cmp-vsnip"}, -- 适用于 vsnip 的代码片段源
-                    {"hrsh7th/cmp-nvim-lsp"}, -- 替换内置 omnifunc，获得更多补全
+                    {"hrsh7th/cmp-nvim-lsp", after = {"aerial.nvim"}}, -- 替换内置 omnifunc，获得更多补全
                     {"hrsh7th/cmp-path"}, -- 路径补全
                     {"hrsh7th/cmp-buffer"}, -- 缓冲区补全
                     {"hrsh7th/cmp-cmdline"}, -- 命令补全
                     {"f3fora/cmp-spell"}, -- 拼写建议
                     {"rafamadriz/friendly-snippets"}, -- 提供多种语言的代码片段
-                    {"lukas-reineke/cmp-under-comparator"}, -- 让补全结果的排序更加智能
+                    {"lukas-reineke/cmp-under-comparator"} -- 让补全结果的排序更加智能
                     --{"tzachar/cmp-tabnine", run = "./install.sh"} -- tabnine 源,提供基于 AI 的智能补全
                 },
                 config = function()
@@ -196,25 +206,16 @@ packer.startup(
                     require("conf.nvim-treesitter")
                 end
             }
-            -- 代码注释
-            --use {
-            --    "numToStr/Comment.nvim",
-            --    requires = {
-            --        "JoosepAlviste/nvim-ts-context-commentstring"
-            --    },
-            --    config = function()
-            --        require("conf.Comment")
-            --    end
-            --}
             use {
-              "terrortylor/nvim-comment",
-              config = function()
-                require("conf.nvim-comment")
-              end
+                "terrortylor/nvim-comment",
+                config = function()
+                    require("conf.nvim-comment")
+                end
             }
             -- 代码格式化
             use {
                 "sbdchd/neoformat",
+                cmd = "Neoformat",
                 config = function()
                     require("conf.neoformat")
                 end
@@ -239,18 +240,38 @@ packer.startup(
             }
             -- 内置终端
             use {
-               "akinsho/toggleterm.nvim",
-               config = function()
-                   require("conf.toggleterm")
-               end
+                "akinsho/toggleterm.nvim",
+                config = function()
+                    require("conf.toggleterm")
+                end
             }
             use {
-             "simrat39/symbols-outline.nvim",
-             config = function()
-               require("conf.symbols-outline")
-             end
+                "simrat39/symbols-outline.nvim",
+                config = function()
+                    require("conf.symbols-outline")
+                end
             }
-
+            use {
+                "voldikss/vim-translator",
+                config = function()
+                    require("conf.vim-translator")
+                end
+            }
+            use {
+                "lewis6991/gitsigns.nvim",
+                disable = false,
+                after = {"nvim-treesitter"},
+                config = function()
+                    require("conf.gitsigns")
+                end
+            }
+            use {
+                "stevearc/aerial.nvim",
+                after = {"nvim-lspconfig"},
+                config = function()
+                    require("conf.aerial")
+                end
+            }
         end,
         -- 使用浮动窗口
         config = {
