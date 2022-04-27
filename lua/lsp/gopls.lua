@@ -1,5 +1,5 @@
 require'lspconfig'.gopls.setup{}
 return {
   cmd =  { "gopls" },
-  filetypes =  { "go", "gomod", "gotmpl" },
+  filetypes =  { "go", "gomod", "gotmpl" }
 }

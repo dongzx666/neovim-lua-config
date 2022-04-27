@@ -1,7 +1,6 @@
 -- leader 键设置为空格
 vim.g.mapleader = " "
 
-
 vim.u.keymap = {
     set = {},
     opt = {
@@ -261,6 +260,36 @@ vim.u.keymap.set.aerial = {
     -- zo    : 打开当前项目
     -- zM    : 关闭所有项目
     -- zR    : 关闭所有项目
+}
+
+vim.u.keymap.set.nvim_lsp_installer = {
+    vim_api_set = {
+        {"n", "gd", "<cmd>Telescope lsp_definitions theme=dropdown<CR>", "ns_opt"},
+        {"n", "gr", "<cmd>Telescope lsp_references theme=dropdown<CR>", "ns_opt"},
+        {"n", "go", "<cmd>Telescope diagnostics theme=dropdown<CR>", "ns_opt"},
+        {"n", "<leader>ca", "<cmd>Telescope lsp_code_actions theme=dropdown<CR>", "ns_opt"},
+        {"n", "<leader>cn", "<cmd>Lspsaga rename<CR>", "ns_opt"},
+        {"n", "gh", "<cmd>Lspsaga hover_doc<CR>", "ns_opt"},
+        {"n", "g[", "<cmd>Lspsaga diagnostic_jump_prev<CR>", "ns_opt"},
+        {"n", "g]", "<cmd>Lspsaga diagnostic_jump_next<CR>", "ns_opt"},
+        {"n", "<C-p>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>", "ns_opt"},
+        {"n", "<C-n>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>", "ns_opt"}
+    },
+    plugin_set = {}
+}
+
+vim.u.keymap.set.lspsaga = {
+    vim_api_set = {},
+    plugin_set = {
+        code_action_keys = {
+            quit = "<esc>",
+            exec = "<cr>"
+        },
+        rename_action_keys = {
+            quit = "<esc>",
+            exec = "<cr>"
+        }
+    }
 }
 
 for plug_name, _ in pairs(vim.u.keymap.set) do

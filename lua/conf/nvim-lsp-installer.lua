@@ -22,7 +22,8 @@ local servers = {
 }
 
 -- 这里是 LSP 服务启动后的按键加载
-local function attach(_, bufnr)
+local function attach(client, bufnr)
+    require("aerial").on_attach(client, bufnr)
     -- 跳转到定义（代替内置 LSP 的窗口，telescope 插件让跳转定义更方便）
     vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>Telescope lsp_definitions theme=dropdown<CR>", {noremap = true, silent = true})
     -- 列出光标下所有引用（代替内置 LSP 的窗口，telescope 插件让查看引用更方便）
