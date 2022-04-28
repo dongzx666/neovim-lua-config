@@ -272,6 +272,13 @@ packer.startup(
                     require("conf.aerial")
                 end
             }
+            use {
+                "folke/which-key.nvim",
+                -- event = {"BufRead", "BufNewFile"},
+                config = function()
+                    require("conf.which-key")
+                end
+            }
         end,
         -- 使用浮动窗口
         config = {
